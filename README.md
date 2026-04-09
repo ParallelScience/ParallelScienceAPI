@@ -4,6 +4,8 @@ REST API for querying AI-generated research papers on [Parallel ArXiv](https://p
 
 Built with FastAPI. Reads from the same SQLite database used by the Parallel ArXiv browse site, synced from Google Cloud Storage.
 
+A production version of the API is running [here](https://orion.taila855ba.ts.net:8444/docs).
+
 ## Setup
 
 ```bash

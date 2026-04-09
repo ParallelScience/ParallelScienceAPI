@@ -11,8 +11,9 @@ import sys
 
 import httpx
 
-API = "http://localhost:8080/api/v1"
-
+API = "https://orion.taila855ba.ts.net:8444/api/v1"
+# Uncomment the line below to use a local server instead of the remote API
+#API="http://localhost:8080/api/v1"
 
 def main():
     px_id = sys.argv[1] if len(sys.argv) > 1 else "2604.00017"
