@@ -1,0 +1,622 @@
+{
+  "astro-ph.CO": {
+    "name": "Cosmology and Nongalactic Astrophysics",
+    "description": "Phenomenology of early universe, cosmic microwave background, cosmological parameters, primordial element abundances, extragalactic distance scale, large-scale structure of the universe, dark energy and dark matter."
+  },
+  "astro-ph.EP": {
+    "name": "Earth and Planetary Astrophysics",
+    "description": "Interplanetary medium, planetary physics, planetary astrobiology, extrasolar planets, solar system formation and evolution, comets, asteroids, meteors."
+  },
+  "astro-ph.GA": {
+    "name": "Astrophysics of Galaxies",
+    "description": "Phenomena pertaining to galaxies or the Milky Way. Star clusters, HII regions, interstellar medium, molecular clouds, galactic structure, formation and evolution."
+  },
+  "astro-ph.HE": {
+    "name": "High Energy Astrophysical Phenomena",
+    "description": "Cosmic ray production, acceleration, propagation, detection. Gamma ray astronomy. Supernovae, neutron stars, pulsars, black holes, X-ray binaries, active galactic nuclei."
+  },
+  "astro-ph.IM": {
+    "name": "Instrumentation and Methods for Astrophysics",
+    "description": "Detector and telescope design, experiment proposals, laboratory astrophysics, data analysis methods, statistical methods, software and simulations."
+  },
+  "astro-ph.SR": {
+    "name": "Solar and Stellar Astrophysics",
+    "description": "White dwarfs, brown dwarfs, cataclysmic variables. Star formation and protostellar systems. Stellar structure, evolution, nucleosynthesis, atmospheres. The Sun."
+  },
+  "cond-mat.dis-nn": {
+    "name": "Disordered Systems and Neural Networks",
+    "description": "Glasses and spin glasses; properties of random, aperiodic and quasiperiodic systems; transport in disordered media; localization; neural networks."
+  },
+  "cond-mat.mes-hall": {
+    "name": "Mesoscale and Nanoscale Physics",
+    "description": "Semiconducting nanostructures: quantum dots, wires, and wells. Single electronics, spintronics, 2D electron systems, quantum Hall effect, nanotubes, graphene."
+  },
+  "cond-mat.mtrl-sci": {
+    "name": "Materials Science",
+    "description": "Techniques, synthesis, characterization, structure. Structural phase transitions, mechanical properties, phonons, defects."
+  },
+  "cond-mat.other": {
+    "name": "Other Condensed Matter",
+    "description": "Work addressing condensed matter topics not fitting other condensed matter classifications."
+  },
+  "cond-mat.quant-gas": {
+    "name": "Quantum Gases",
+    "description": "Ultracold atomic and molecular gases, Bose-Einstein condensation, Feshbach resonances, atom-molecule mixtures, quantum simulations."
+  },
+  "cond-mat.soft": {
+    "name": "Soft Condensed Matter",
+    "description": "Membranes, polymers, liquid crystals, glasses, colloids, granular matter, foams, biological physics."
+  },
+  "cond-mat.stat-mech": {
+    "name": "Statistical Mechanics",
+    "description": "Phase transitions, thermodynamics, field theory, non-equilibrium phenomena, renormalization group, percolation, exactly solvable models."
+  },
+  "cond-mat.str-el": {
+    "name": "Strongly Correlated Electrons",
+    "description": "Quantum magnetism, non-Fermi liquids, spin liquids, quantum criticality, heavy fermions, Kondo physics, Mott transition."
+  },
+  "cond-mat.supr-con": {
+    "name": "Superconductivity",
+    "description": "Superconductivity: theory, models, experiment. Superflow in helium. High-temperature superconductors."
+  },
+  "cs.AI": {
+    "name": "Artificial Intelligence",
+    "description": "Covers all areas of AI except Vision, Robotics, Machine Learning, Multiagent Systems, and Computation and Language, which have separate categories."
+  },
+  "cs.AR": {
+    "name": "Hardware Architecture",
+    "description": "Covers systems organization and hardware architecture, including digital logic, processor design, memory systems."
+  },
+  "cs.CC": {
+    "name": "Computational Complexity",
+    "description": "Covers models of computation, complexity classes, structural complexity, complexity tradeoffs, upper and lower bounds."
+  },
+  "cs.CE": {
+    "name": "Computational Engineering, Finance, and Science",
+    "description": "Covers applications of computer science to the mathematical modeling of complex systems in science, engineering, and finance."
+  },
+  "cs.CG": {
+    "name": "Computational Geometry",
+    "description": "Covers geometric algorithms, computational methods for spatial problems, mesh generation, shape analysis."
+  },
+  "cs.CL": {
+    "name": "Computation and Language",
+    "description": "Covers natural language processing, computational linguistics, speech recognition, text generation, machine translation."
+  },
+  "cs.CR": {
+    "name": "Cryptography and Security",
+    "description": "Covers all areas of cryptography and security including authentication, public key cryptosystems, proof-carrying code."
+  },
+  "cs.CV": {
+    "name": "Computer Vision and Pattern Recognition",
+    "description": "Covers image processing, computer vision, pattern recognition, and scene understanding."
+  },
+  "cs.CY": {
+    "name": "Computers and Society",
+    "description": "Covers impact of computers on society, computer ethics, information technology and public policy, legal issues."
+  },
+  "cs.DB": {
+    "name": "Databases",
+    "description": "Covers database management, datamining, and data processing, query languages, indexing."
+  },
+  "cs.DC": {
+    "name": "Distributed, Parallel, and Cluster Computing",
+    "description": "Covers fault-tolerance, distributed algorithms, stability, parallel computation, and cluster computing."
+  },
+  "cs.DL": {
+    "name": "Digital Libraries",
+    "description": "Covers all aspects of the digital library design and document and text creation."
+  },
+  "cs.DM": {
+    "name": "Discrete Mathematics",
+    "description": "Covers combinatorics, graph theory, applications of probability in discrete structures."
+  },
+  "cs.DS": {
+    "name": "Data Structures and Algorithms",
+    "description": "Covers data structures and analysis of algorithms, sorting, searching, graph algorithms."
+  },
+  "cs.ET": {
+    "name": "Emerging Technologies",
+    "description": "Covers approaches to information processing based on alternatives to silicon CMOS-based technologies, including quantum computing, DNA computing."
+  },
+  "cs.FL": {
+    "name": "Formal Languages and Automata Theory",
+    "description": "Covers automata theory, formal language theory, grammars, and combinatorics on words."
+  },
+  "cs.GL": {
+    "name": "General Literature",
+    "description": "Covers introductory material, survey material, predictions of future trends, biographies."
+  },
+  "cs.GR": {
+    "name": "Graphics",
+    "description": "Covers all aspects of computer graphics, rendering, modeling, animation."
+  },
+  "cs.GT": {
+    "name": "Computer Science and Game Theory",
+    "description": "Covers all theoretical and applied aspects at the intersection of computer science and game theory, mechanism design, auction theory."
+  },
+  "cs.HC": {
+    "name": "Human-Computer Interaction",
+    "description": "Covers human factors, user interfaces, and collaborative computing."
+  },
+  "cs.IR": {
+    "name": "Information Retrieval",
+    "description": "Covers indexing, dictionaries, retrieval, content and analysis, search engines, web search."
+  },
+  "cs.IT": {
+    "name": "Information Theory",
+    "description": "Covers theoretical and experimental aspects of information theory and coding, data compression, channel capacity."
+  },
+  "cs.LG": {
+    "name": "Machine Learning",
+    "description": "Papers on all aspects of machine learning research including supervised, unsupervised, reinforcement learning, deep learning, representation learning."
+  },
+  "cs.LO": {
+    "name": "Logic in Computer Science",
+    "description": "Covers all aspects of logic in computer science, including finite model theory, logics of programs, modal logic, model checking."
+  },
+  "cs.MA": {
+    "name": "Multiagent Systems",
+    "description": "Covers multiagent systems, distributed artificial intelligence, intelligent agents, coordinated interactions, multi-robot systems."
+  },
+  "cs.MM": {
+    "name": "Multimedia",
+    "description": "Covers multimedia computing applications and technologies, media processing."
+  },
+  "cs.MS": {
+    "name": "Mathematical Software",
+    "description": "Covers development and analysis of algorithms for mathematical software, numerical libraries."
+  },
+  "cs.NA": {
+    "name": "Numerical Analysis",
+    "description": "Covers numerical methods, scientific computing, computational mathematics."
+  },
+  "cs.NE": {
+    "name": "Neural and Evolutionary Computing",
+    "description": "Covers neural networks, connectionism, genetic algorithms, artificial life, adaptive behavior, evolutionary computation."
+  },
+  "cs.NI": {
+    "name": "Networking and Internet Architecture",
+    "description": "Covers all aspects of computer communication networks, including network architecture and design, protocols, routing."
+  },
+  "cs.OH": {
+    "name": "Other Computer Science",
+    "description": "Classification for documents that do not fit anywhere else in computer science."
+  },
+  "cs.OS": {
+    "name": "Operating Systems",
+    "description": "Covers system software for resource management, process control, scheduling."
+  },
+  "cs.PF": {
+    "name": "Performance",
+    "description": "Covers performance measurement and evaluation, queueing, and simulation."
+  },
+  "cs.PL": {
+    "name": "Programming Languages",
+    "description": "Covers programming language semantics, language features, programming approaches, type systems, compilers."
+  },
+  "cs.RO": {
+    "name": "Robotics",
+    "description": "Covers robot design, control, planning, perception, manipulation, locomotion."
+  },
+  "cs.SC": {
+    "name": "Symbolic Computation",
+    "description": "Covers mathematical symbolic manipulation, computer algebra systems."
+  },
+  "cs.SD": {
+    "name": "Sound",
+    "description": "Covers all aspects of computing with sound, and sound as an information channel, audio processing."
+  },
+  "cs.SE": {
+    "name": "Software Engineering",
+    "description": "Covers design tools, software metrics, testing and debugging, programming environments, software development methodologies."
+  },
+  "cs.SI": {
+    "name": "Social and Information Networks",
+    "description": "Covers the design, analysis, and modeling of social and information networks, including online social networks, viral propagation."
+  },
+  "cs.SY": {
+    "name": "Systems and Control",
+    "description": "Covers theoretical and experimental research on all facets of automatic control systems, including linear and nonlinear control."
+  },
+  "econ.EM": {
+    "name": "Econometrics",
+    "description": "Econometric theory, micro-econometrics, macro-econometrics, empirical content of economic relations, estimation and inference."
+  },
+  "econ.GN": {
+    "name": "General Economics",
+    "description": "General methodological, applied, and empirical contributions to economics."
+  },
+  "econ.TH": {
+    "name": "Theoretical Economics",
+    "description": "Includes theoretical contributions to contract theory, decision theory, game theory, general equilibrium, mechanism design."
+  },
+  "eess.AS": {
+    "name": "Audio and Speech Processing",
+    "description": "Theory and methods for processing signals representing audio, speech, and language, including speech recognition and synthesis."
+  },
+  "eess.IV": {
+    "name": "Image and Video Processing",
+    "description": "Theory, algorithms, and architectures for the formation, capture, processing, communication of images and video."
+  },
+  "eess.SP": {
+    "name": "Signal Processing",
+    "description": "Theory, algorithms, performance analysis and applications of signal and data analysis, filtering, detection."
+  },
+  "eess.SY": {
+    "name": "Systems and Control",
+    "description": "Covers automatic control systems, analysis methods, and applications across engineering and scientific domains."
+  },
+  "gr-qc": {
+    "name": "General Relativity and Quantum Cosmology",
+    "description": "Areas of gravitational physics, including experiments and observations related to gravitational waves, general relativity, quantum gravity."
+  },
+  "hep-ex": {
+    "name": "High Energy Physics - Experiment",
+    "description": "Results from high-energy/particle physics experiments and prospects for future experimental results, collider physics."
+  },
+  "hep-lat": {
+    "name": "High Energy Physics - Lattice",
+    "description": "Lattice field theory. Phenomenology from lattice field theory. Algorithms for lattice field theory, lattice QCD."
+  },
+  "hep-ph": {
+    "name": "High Energy Physics - Phenomenology",
+    "description": "Theoretical particle physics and its interrelation with experiment. Prediction of particle physics observables, Standard Model and beyond."
+  },
+  "hep-th": {
+    "name": "High Energy Physics - Theory",
+    "description": "Formal aspects of quantum field theory. String theory, supersymmetry and supergravity, conformal field theory, AdS/CFT."
+  },
+  "math-ph": {
+    "name": "Mathematical Physics",
+    "description": "Articles focusing on application of mathematics to problems in physics, developing mathematical methods for physical problems."
+  },
+  "math.AC": {
+    "name": "Commutative Algebra",
+    "description": "Commutative rings, modules, ideals, homological algebra, computational aspects, invariant theory, Groebner bases."
+  },
+  "math.AG": {
+    "name": "Algebraic Geometry",
+    "description": "Algebraic varieties, stacks, sheaves, schemes, moduli spaces, complex geometry, quantum cohomology."
+  },
+  "math.AP": {
+    "name": "Analysis of PDEs",
+    "description": "Existence and uniqueness, boundary conditions, linear and non-linear operators, stability, soliton theory."
+  },
+  "math.AT": {
+    "name": "Algebraic Topology",
+    "description": "Homotopy theory, homological algebra, algebraic treatments of manifolds."
+  },
+  "math.CA": {
+    "name": "Classical Analysis and ODEs",
+    "description": "Special functions, orthogonal polynomials, harmonic analysis, ODEs, differential relations, calculus of variations."
+  },
+  "math.CO": {
+    "name": "Combinatorics",
+    "description": "Discrete mathematics, graph theory, enumeration, combinatorial optimization, Ramsey theory, combinatorial geometry."
+  },
+  "math.CT": {
+    "name": "Category Theory",
+    "description": "Enriched categories, topoi, abelian categories, monoidal categories, homological algebra."
+  },
+  "math.CV": {
+    "name": "Complex Variables",
+    "description": "Holomorphic functions, automorphic group actions and forms, pseudoconvexity, complex geometry, analytic spaces."
+  },
+  "math.DG": {
+    "name": "Differential Geometry",
+    "description": "Complex, contact, Riemannian, pseudo-Riemannian and Finsler geometry, relativity, gauge theory, global analysis."
+  },
+  "math.DS": {
+    "name": "Dynamical Systems",
+    "description": "Dynamics of differential equations and flows, mechanics, classical few-body problems, iterations, bifurcation theory."
+  },
+  "math.FA": {
+    "name": "Functional Analysis",
+    "description": "Banach spaces, function spaces, real functions, integral transforms, theory of distributions, measure theory."
+  },
+  "math.GM": {
+    "name": "General Mathematics",
+    "description": "Mathematical material of general interest, topics not covered elsewhere."
+  },
+  "math.GN": {
+    "name": "General Topology",
+    "description": "Continuum theory, point-set topology, spaces with algebraic structure, foundations, dimension theory."
+  },
+  "math.GR": {
+    "name": "Group Theory",
+    "description": "Finite groups, topological groups, representation theory, cohomology, classification and structure."
+  },
+  "math.GT": {
+    "name": "Geometric Topology",
+    "description": "Manifolds, orbifolds, polyhedra, cell complexes, foliations, geometric structures on manifolds, knot theory."
+  },
+  "math.HO": {
+    "name": "History and Overview",
+    "description": "Biographies, philosophy of mathematics, mathematics education, recreational mathematics, communication of mathematics."
+  },
+  "math.IT": {
+    "name": "Information Theory",
+    "description": "Mathematical foundations of information and coding theory, entropy, channel capacity, rate-distortion theory."
+  },
+  "math.KT": {
+    "name": "K-Theory and Homology",
+    "description": "Algebraic and topological K-theory, relations with topology, commutative algebra, and operator algebras."
+  },
+  "math.LO": {
+    "name": "Logic",
+    "description": "Logic, set theory, point-set topology, formal mathematics, computability theory, model theory."
+  },
+  "math.MG": {
+    "name": "Metric Geometry",
+    "description": "Euclidean, hyperbolic, discrete, convex, coarse geometry, comparisons in Riemannian geometry, geometric group theory."
+  },
+  "math.MP": {
+    "name": "Mathematical Physics",
+    "description": "Articles focusing on application of mathematics to problems in physics, developing mathematical methods for physics."
+  },
+  "math.NA": {
+    "name": "Numerical Analysis",
+    "description": "Numerical algorithms for problems in analysis and algebra, scientific computation, finite elements, interpolation."
+  },
+  "math.NT": {
+    "name": "Number Theory",
+    "description": "Prime numbers, diophantine equations, analytic number theory, algebraic number theory, arithmetic geometry."
+  },
+  "math.OA": {
+    "name": "Operator Algebras",
+    "description": "Algebras of operators on Hilbert space, C*-algebras, von Neumann algebras, noncommutative geometry."
+  },
+  "math.OC": {
+    "name": "Optimization and Control",
+    "description": "Operations research, linear programming, control theory, systems theory, optimal control, game theory."
+  },
+  "math.PR": {
+    "name": "Probability",
+    "description": "Theory and applications of probability and stochastic processes: central limit theorems, large deviations, stochastic differential equations."
+  },
+  "math.QA": {
+    "name": "Quantum Algebra",
+    "description": "Quantum groups, skein theories, operadic and diagrammatic algebra, quantum field theory."
+  },
+  "math.RA": {
+    "name": "Rings and Algebras",
+    "description": "Non-commutative rings and algebras, non-associative algebras, universal algebra and lattice theory."
+  },
+  "math.RT": {
+    "name": "Representation Theory",
+    "description": "Linear representations of algebras and groups, Lie theory, associative algebras, multilinear algebra."
+  },
+  "math.SG": {
+    "name": "Symplectic Geometry",
+    "description": "Hamiltonian systems, symplectic flows, classical integrable systems."
+  },
+  "math.SP": {
+    "name": "Spectral Theory",
+    "description": "Schrodinger operators, operators on manifolds, general differential operators, numerical studies of spectra."
+  },
+  "math.ST": {
+    "name": "Statistics Theory",
+    "description": "Applied, computational and theoretical statistics: statistical inference, regression, time series, multivariate analysis."
+  },
+  "nlin.AO": {
+    "name": "Adaptation and Self-Organizing Systems",
+    "description": "Adaptation, self-organizing systems, statistical physics, fluctuating systems, stochastic processes, interacting particle systems."
+  },
+  "nlin.CD": {
+    "name": "Chaotic Dynamics",
+    "description": "Dynamical systems, chaos, quantum chaos, topological dynamics, cycle expansions, bifurcations."
+  },
+  "nlin.CG": {
+    "name": "Cellular Automata and Lattice Gases",
+    "description": "Computational methods, time series analysis, signal processing, wavelets, lattice gases, cellular automata."
+  },
+  "nlin.PS": {
+    "name": "Pattern Formation and Solitons",
+    "description": "Pattern formation, coherent structures, solitons, nonlinear waves."
+  },
+  "nlin.SI": {
+    "name": "Exactly Solvable and Integrable Systems",
+    "description": "Exactly solvable systems, integrable PDEs, integrable ODEs, Painleve analysis, inverse scattering."
+  },
+  "nucl-ex": {
+    "name": "Nuclear Experiment",
+    "description": "Results from experimental nuclear physics including fundamental interactions, measurements, nuclear structure."
+  },
+  "nucl-th": {
+    "name": "Nuclear Theory",
+    "description": "Theory of nuclear structure covering wide area from models of hadron structure to neutron stars, nuclear reactions."
+  },
+  "physics.acc-ph": {
+    "name": "Accelerator Physics",
+    "description": "Accelerator theory and simulation. Accelerator technology. Accelerator experiments. Beam physics, beam dynamics."
+  },
+  "physics.ao-ph": {
+    "name": "Atmospheric and Oceanic Physics",
+    "description": "Atmospheric and oceanic physics and physical chemistry, biogeophysics, and climate science."
+  },
+  "physics.app-ph": {
+    "name": "Applied Physics",
+    "description": "Applications of physics to new technology, including electronic devices, optics, photonics, energy harvesting."
+  },
+  "physics.atm-clus": {
+    "name": "Atomic and Molecular Clusters",
+    "description": "Atomic and molecular clusters, nanoparticles: geometric, electronic, optical, chemical properties."
+  },
+  "physics.atom-ph": {
+    "name": "Atomic Physics",
+    "description": "Atomic and molecular structure, spectra, collisions, and data. Atoms and molecules in external fields, precision measurements."
+  },
+  "physics.bio-ph": {
+    "name": "Biological Physics",
+    "description": "Molecular biophysics, cellular biophysics, neurological biophysics, membrane biophysics, single-molecule physics."
+  },
+  "physics.chem-ph": {
+    "name": "Chemical Physics",
+    "description": "Experimental, computational, and theoretical physics of atoms, molecules, and clusters involving chemical processes."
+  },
+  "physics.class-ph": {
+    "name": "Classical Physics",
+    "description": "Newtonian and relativistic dynamics; many particle systems; planetary motions; pendulums; acoustics; thermodynamics."
+  },
+  "physics.comp-ph": {
+    "name": "Computational Physics",
+    "description": "All aspects of computational science applied to physics, numerical methods, simulation, high-performance computing."
+  },
+  "physics.data-an": {
+    "name": "Data Analysis, Statistics and Probability",
+    "description": "Methods, software and hardware for physics data analysis: data processing and storage, statistical methods."
+  },
+  "physics.ed-ph": {
+    "name": "Physics Education",
+    "description": "Report of results of a research study, laboratory experience, assessment or classroom practice in physics education."
+  },
+  "physics.flu-dyn": {
+    "name": "Fluid Dynamics",
+    "description": "Turbulence, instabilities, incompressible/compressible flows, reacting flows, multiphase flows."
+  },
+  "physics.gen-ph": {
+    "name": "General Physics",
+    "description": "General physics topics not fitting other physics categories."
+  },
+  "physics.geo-ph": {
+    "name": "Geophysics",
+    "description": "Atmospheric physics. Biogeosciences. Computational geophysics. Seismology, tectonics, volcanology."
+  },
+  "physics.hist-ph": {
+    "name": "History and Philosophy of Physics",
+    "description": "History and philosophy of all branches of physics, astrophysics, and cosmology."
+  },
+  "physics.ins-det": {
+    "name": "Instrumentation and Detectors",
+    "description": "Instrumentation and detectors for research in natural science, including optical, molecular, nuclear, and particle physics."
+  },
+  "physics.med-ph": {
+    "name": "Medical Physics",
+    "description": "Radiation therapy. Radiation dosimetry. Biomedical imaging modelling. Reconstruction, image processing."
+  },
+  "physics.optics": {
+    "name": "Optics",
+    "description": "Adaptive, astronomical, fiber, quantum, and laser optics. Nonlinear optics, optical materials."
+  },
+  "physics.plasm-ph": {
+    "name": "Plasma Physics",
+    "description": "Fundamental plasma physics. Magnetically confined plasmas. High energy density plasmas. Plasma diagnostics."
+  },
+  "physics.pop-ph": {
+    "name": "Popular Physics",
+    "description": "Popular physics topics and science communication."
+  },
+  "physics.soc-ph": {
+    "name": "Physics and Society",
+    "description": "Structure, dynamics and collective behavior of societies and groups. Quantitative analysis of social networks."
+  },
+  "physics.space-ph": {
+    "name": "Space Physics",
+    "description": "Space plasma physics. Heliophysics. Space weather. Planetary magnetospheres, ionospheres, radiation belts."
+  },
+  "quant-ph": {
+    "name": "Quantum Physics",
+    "description": "Quantum information, quantum computation, quantum entanglement, quantum foundations, quantum optics, quantum many-body systems."
+  },
+  "q-bio.BM": {
+    "name": "Biomolecules",
+    "description": "DNA, RNA, proteins, lipids, etc.; molecular structures and folding kinetics; molecular interactions and recognition."
+  },
+  "q-bio.CB": {
+    "name": "Cell Behavior",
+    "description": "Cell-cell signaling and interaction; morphogenesis and development; apoptosis; bacterial and viral behavior."
+  },
+  "q-bio.GN": {
+    "name": "Genomics",
+    "description": "DNA sequencing and assembly; gene and motif finding; RNA editing and alternative splicing; genomic structure and data analysis."
+  },
+  "q-bio.MN": {
+    "name": "Molecular Networks",
+    "description": "Gene regulation, signal transduction, proteomics, metabolomics, gene and enzymatic networks."
+  },
+  "q-bio.NC": {
+    "name": "Neurons and Cognition",
+    "description": "Synapse, cortex, neuronal dynamics, neural network, sensorimotor control, behavior, attention, cognitive processes."
+  },
+  "q-bio.OT": {
+    "name": "Other Quantitative Biology",
+    "description": "Work in quantitative biology not fitting other quantitative biology classifications."
+  },
+  "q-bio.PE": {
+    "name": "Populations and Evolution",
+    "description": "Population dynamics, spatio-temporal and epidemiological models, dynamic speciation, phylogeny, biodiversity."
+  },
+  "q-bio.QM": {
+    "name": "Quantitative Methods",
+    "description": "All experimental, numerical, statistical and mathematical contributions of value to biology."
+  },
+  "q-bio.SC": {
+    "name": "Subcellular Processes",
+    "description": "Assembly and control of subcellular structures; molecular motors, transport, organelle biogenesis."
+  },
+  "q-bio.TO": {
+    "name": "Tissues and Organs",
+    "description": "Blood flow in vessels, biomechanics of bones, electrical waves, endocrine system, tissue mechanics."
+  },
+  "q-fin.CP": {
+    "name": "Computational Finance",
+    "description": "Computational methods, including Monte Carlo, PDE, lattice and other numerical methods with applications to finance."
+  },
+  "q-fin.EC": {
+    "name": "Economics",
+    "description": "Economics and finance interfaces, economic modeling, behavioral economics."
+  },
+  "q-fin.GN": {
+    "name": "General Finance",
+    "description": "Development of general quantitative methodologies with applications in finance."
+  },
+  "q-fin.MF": {
+    "name": "Mathematical Finance",
+    "description": "Mathematical and analytical methods of finance, including stochastic, probabilistic and deterministic methods."
+  },
+  "q-fin.PM": {
+    "name": "Portfolio Management",
+    "description": "Security selection and optimization, capital allocation, investment strategies and performance."
+  },
+  "q-fin.PR": {
+    "name": "Pricing of Securities",
+    "description": "Valuation and hedging of financial securities, their derivatives, and structured products."
+  },
+  "q-fin.RM": {
+    "name": "Risk Management",
+    "description": "Measurement and management of financial risks in trading, banking, insurance, corporate finance."
+  },
+  "q-fin.ST": {
+    "name": "Statistical Finance",
+    "description": "Statistical, econometric and econophysics analyses with applications to financial markets and data."
+  },
+  "q-fin.TR": {
+    "name": "Trading and Market Microstructure",
+    "description": "Market microstructure, liquidity, exchange and auction design, automated trading, agent-based models."
+  },
+  "stat.AP": {
+    "name": "Applications",
+    "description": "Applications of statistics to biology, education, epidemiology, engineering, environmental sciences, medicine, physical sciences."
+  },
+  "stat.CO": {
+    "name": "Computation",
+    "description": "Algorithms, simulation, visualization, Monte Carlo methods, computational Bayesian methods."
+  },
+  "stat.ME": {
+    "name": "Methodology",
+    "description": "Design, surveys, model selection, multiple testing, multivariate methods, signal and image processing, time series."
+  },
+  "stat.ML": {
+    "name": "Machine Learning",
+    "description": "Covers machine learning papers with a statistical or theoretical grounding, including learning theory."
+  },
+  "stat.OT": {
+    "name": "Other Statistics",
+    "description": "Work in statistics not fitting other statistics classifications."
+  },
+  "stat.TH": {
+    "name": "Statistics Theory",
+    "description": "Statistical foundations, theoretical statistics, statistical inference, asymptotic theory, decision theory."
+  }
+}
