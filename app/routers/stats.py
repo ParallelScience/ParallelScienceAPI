@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, Query
 
 from app.dependencies import get_db
-from app.models import CategoryCount, StatsOverview, SubmissionPoint
+from app.models import CategoryCount, StatsOverview, SubmissionPoint, TopCitedPaper
 from app.taxonomy import get_category_name
 
 router = APIRouter(prefix="/stats", tags=["statistics"])
@@ -57,3 +57,21 @@ def get_category_stats(db=Depends(get_db)):
         }
         for r in rows
     ]
+
+
+@router.get("/top-cited", response_model=list[TopCitedPaper])
+def get_top_cited(
+    db=Depends(get_db),
+    limit: int = Query(20, ge=1, le=100, description="Max results"),
+):
+    """Papers most cited by other PX papers."""
+    rows = db.execute(
+        "SELECT c.cited_px_id AS px_id, p.title, p.author, COUNT(*) AS cited_by_count "
+        "FROM citations c "
+        "JOIN papers p ON p.px_id = c.cited_px_id AND p.is_current = 1 "
+        "WHERE c.cited_px_id IS NOT NULL "
+        "GROUP BY c.cited_px_id "
+        "ORDER BY cited_by_count DESC LIMIT ?",
+        (limit,),
+    ).fetchall()
+    return [dict(r) for r in rows]

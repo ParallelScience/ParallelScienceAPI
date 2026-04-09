@@ -19,11 +19,24 @@ _db_path: str = ""
 _last_synced: str | None = None
 
 
+CITATIONS_TABLE_SQL = """
+CREATE TABLE IF NOT EXISTS citations (
+    citing_px_id TEXT NOT NULL, citation_key TEXT NOT NULL,
+    cited_px_id TEXT, arxiv_id TEXT, doi TEXT, title TEXT, authors TEXT, year TEXT,
+    created_at TEXT NOT NULL DEFAULT '',
+    PRIMARY KEY (citing_px_id, citation_key));
+CREATE INDEX IF NOT EXISTS idx_citations_cited_px ON citations(cited_px_id) WHERE cited_px_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_citations_citing ON citations(citing_px_id);
+"""
+
+
 def _open(path: str) -> sqlite3.Connection:
     conn = sqlite3.connect(path, check_same_thread=False)
     conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA query_only=ON")
     conn.execute("PRAGMA journal_mode=WAL")
+    # Ensure citations table exists (may be missing from older DBs)
+    conn.executescript(CITATIONS_TABLE_SQL)
+    conn.execute("PRAGMA query_only=ON")
     return conn
 
 

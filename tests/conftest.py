@@ -38,6 +38,14 @@ CREATE INDEX IF NOT EXISTS idx_papers_current ON papers(is_current) WHERE is_cur
 CREATE INDEX IF NOT EXISTS idx_papers_category ON papers(primary_category) WHERE is_current = 1;
 CREATE INDEX IF NOT EXISTS idx_papers_author ON papers(author) WHERE is_current = 1;
 CREATE INDEX IF NOT EXISTS idx_papers_repo ON papers(repo);
+
+CREATE TABLE IF NOT EXISTS citations (
+    citing_px_id TEXT NOT NULL, citation_key TEXT NOT NULL,
+    cited_px_id TEXT, arxiv_id TEXT, doi TEXT, title TEXT, authors TEXT, year TEXT,
+    created_at TEXT NOT NULL DEFAULT '',
+    PRIMARY KEY (citing_px_id, citation_key));
+CREATE INDEX IF NOT EXISTS idx_citations_cited_px ON citations(cited_px_id) WHERE cited_px_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_citations_citing ON citations(citing_px_id);
 """
 
 SEED_DATA = [
@@ -101,6 +109,24 @@ def test_db():
     conn.execute(
         "UPDATE papers SET is_current = 0 WHERE px_id = '2604.00002' AND version = 1"
     )
+
+    # Seed citation data
+    citations = [
+        # Paper 1 cites an external arXiv paper and paper 3
+        ("2604.00001", "Smith2020", None, "2001.12345", None, "External Paper", "Smith J.", "2020"),
+        ("2604.00001", "PX:2604.00003", "2604.00003", None, None, "Climate Modeling with Deep Learning", "Alice Smith", "2026"),
+        # Paper 2 (current v2) cites paper 1
+        ("2604.00002", "PX:2604.00001", "2604.00001", None, None, "Dark Matter Detection with AI", "Alice Smith", "2026"),
+        ("2604.00002", "Jones2019", None, "1912.54321", None, "Another External", "Jones B.", "2019"),
+        # Paper 3 cites an external paper
+        ("2604.00003", "Lee2021", None, "2103.99999", None, "Deep Learning Review", "Lee K.", "2021"),
+    ]
+    for c in citations:
+        conn.execute(
+            "INSERT INTO citations (citing_px_id, citation_key, cited_px_id, arxiv_id, doi, title, authors, year) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)", c
+        )
+
     conn.commit()
     return conn
 

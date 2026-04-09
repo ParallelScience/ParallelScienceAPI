@@ -152,3 +152,67 @@ def test_stats_categories(client):
     data = r.json()
     assert len(data) >= 2
     assert all("category" in c and "count" in c for c in data)
+
+
+def test_stats_top_cited(client):
+    r = client.get("/api/v1/stats/top-cited")
+    assert r.status_code == 200
+    data = r.json()
+    assert len(data) >= 1
+    # Paper 1 and 3 are cited by other PX papers
+    px_ids = [p["px_id"] for p in data]
+    assert "2604.00001" in px_ids or "2604.00003" in px_ids
+
+
+# --- Citations ---
+
+def test_get_references(client):
+    r = client.get("/api/v1/papers/2604.00001/references")
+    assert r.status_code == 200
+    data = r.json()
+    assert len(data) == 2  # one external, one PX
+    keys = {e["citation_key"] for e in data}
+    assert "Smith2020" in keys
+    assert "PX:2604.00003" in keys
+    # Check is_px_paper flag
+    for entry in data:
+        if entry["citation_key"] == "PX:2604.00003":
+            assert entry["is_px_paper"] is True
+            assert entry["cited_px_id"] == "2604.00003"
+        else:
+            assert entry["is_px_paper"] is False
+            assert entry["arxiv_id"] == "2001.12345"
+
+
+def test_get_references_not_found(client):
+    r = client.get("/api/v1/papers/9999.99999/references")
+    assert r.status_code == 404
+
+
+def test_get_cited_by(client):
+    r = client.get("/api/v1/papers/2604.00001/cited-by")
+    assert r.status_code == 200
+    data = r.json()
+    assert len(data) == 1  # paper 2 cites paper 1
+    assert data[0]["citing_px_id"] == "2604.00002"
+
+
+def test_get_cited_by_empty(client):
+    r = client.get("/api/v1/papers/2604.00002/cited-by")
+    assert r.status_code == 200
+    assert r.json() == []  # nobody cites paper 2
+
+
+def test_citation_counts(client):
+    r = client.get("/api/v1/papers/2604.00001/citation-counts")
+    assert r.status_code == 200
+    data = r.json()
+    assert data["px_id"] == "2604.00001"
+    assert data["references_count"] == 2    # cites 2 papers
+    assert data["px_references_count"] == 1  # 1 is a PX paper
+    assert data["cited_by_count"] == 1       # cited by paper 2
+
+
+def test_citation_counts_not_found(client):
+    r = client.get("/api/v1/papers/9999.99999/citation-counts")
+    assert r.status_code == 404

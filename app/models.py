@@ -89,3 +89,38 @@ class HealthResponse(BaseModel):
     status: str
     paper_count: int
     db_last_synced: str | None
+
+
+# --- Citations ---
+
+class CitationEntry(BaseModel):
+    citation_key: str
+    cited_px_id: str | None
+    arxiv_id: str | None
+    doi: str | None
+    title: str | None
+    authors: str | None
+    year: str | None
+    is_px_paper: bool
+
+
+class CitedByEntry(BaseModel):
+    citing_px_id: str
+    title: str
+    author: str
+    date: str
+    primary_category: str
+
+
+class CitationCounts(BaseModel):
+    px_id: str
+    references_count: int
+    cited_by_count: int
+    px_references_count: int
+
+
+class TopCitedPaper(BaseModel):
+    px_id: str
+    title: str
+    author: str
+    cited_by_count: int

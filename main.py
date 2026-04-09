@@ -9,7 +9,7 @@ from fastapi import FastAPI, Header, HTTPException
 from app.config import get_settings
 from app.database import get_connection, get_last_synced, init_db, refresh_db
 from app.models import HealthResponse
-from app.routers import authors, categories, papers, stats
+from app.routers import authors, categories, citations, papers, stats
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
 log = logging.getLogger(__name__)
@@ -47,6 +47,7 @@ prefix = get_settings().api_v1_prefix
 app.include_router(papers.router, prefix=prefix)
 app.include_router(authors.router, prefix=prefix)
 app.include_router(categories.router, prefix=prefix)
+app.include_router(citations.router, prefix=prefix)
 app.include_router(stats.router, prefix=prefix)
 
 
