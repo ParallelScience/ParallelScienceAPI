@@ -57,7 +57,9 @@ curl "http://localhost:8080/api/v1/papers?search=dark+matter"
 curl http://localhost:8080/api/v1/stats
 ```
 
-See [`examples/`](examples/) for more complete curl and Python examples.
+See [`examples/`](examples/) for more:
+- `paper_curl.sh` / `paper_python.py` — query a single paper by PX ID
+- `browse_curl.sh` / `browse_python.py` — browse papers, authors, categories, and stats
 
 ## Tests
 
