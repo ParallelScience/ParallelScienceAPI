@@ -5,7 +5,7 @@
 #   ./paper_curl.sh              # uses default PX ID
 #   ./paper_curl.sh 2604.00003   # specify a PX ID
 
-API="https://orion.taila855ba.ts.net:8444/api/v1"
+API="https://parallel-science-api-689836870161.us-central1.run.app/api/v1"
 # Uncomment the line below to use a local server instead of the remote API
 #API="http://localhost:8080/api/v1"
 

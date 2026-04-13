@@ -8,7 +8,7 @@ Built with FastAPI. Reads from two SQLite databases (`papers.db`, `reviews.db`)
 synced from Google Cloud Storage by the upstream `arxiv-browse` and
 `ParallelReview` pipelines.
 
-A production version of the API is running [here](https://orion.taila855ba.ts.net:8444/docs).
+A production version of the API is running [here](https://parallel-science-api-689836870161.us-central1.run.app/docs).
 
 ## Setup
 
