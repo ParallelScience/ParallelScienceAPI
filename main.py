@@ -5,6 +5,7 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Header, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
 from app.database import get_connection, get_last_synced, init_db, refresh_db
@@ -41,6 +42,13 @@ app = FastAPI(
     description="REST API for querying AI-generated research papers on Parallel ArXiv (papers.parallelscience.org).",
     version="0.1.0",
     lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
 )
 
 prefix = get_settings().api_v1_prefix
