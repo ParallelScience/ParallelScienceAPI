@@ -4,12 +4,20 @@ import re
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
 
-from app.dependencies import PaginationParams, get_db, pagination, row_to_dict
+from app.dependencies import (
+    PaginationParams,
+    get_db,
+    get_reviews_db,
+    pagination,
+    row_to_dict,
+)
 from app.models import (
     PaginatedPapersResponse,
     PaperDetail,
     PaperVersion,
+    ReviewSummary,
 )
+from app.routers.reviews import _SUMMARY_COLUMNS, _row_to_summary
 
 router = APIRouter(prefix="/papers", tags=["papers"])
 
@@ -84,6 +92,25 @@ def get_paper_version(px_id: str, version: int, db=Depends(get_db)):
     if not row:
         raise HTTPException(404, f"Paper {px_id} version {version} not found")
     return row_to_dict(row)
+
+
+@router.get("/{px_id}/reviews", response_model=list[ReviewSummary])
+def get_paper_reviews(
+    px_id: str,
+    db=Depends(get_db),
+    reviews_db=Depends(get_reviews_db),
+):
+    paper = db.execute(
+        "SELECT 1 FROM papers WHERE px_id = ? AND is_current = 1", (px_id,)
+    ).fetchone()
+    if not paper:
+        raise HTTPException(404, f"Paper {px_id} not found")
+    rows = reviews_db.execute(
+        f"SELECT {_SUMMARY_COLUMNS} FROM reviews "
+        "WHERE px_id = ? AND is_current = 1 ORDER BY review_date DESC",
+        (px_id,),
+    ).fetchall()
+    return [_row_to_summary(r) for r in rows]
 
 
 @router.get("/{px_id}/bibtex", response_class=Response)

@@ -1,4 +1,4 @@
 __pycache__
 uv.lock
 *.log
-
+*.egg-info/

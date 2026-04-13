@@ -7,6 +7,8 @@ def test_health(client):
     data = r.json()
     assert data["status"] == "ok"
     assert data["paper_count"] == 3  # 3 current papers
+    assert data["reviews_count"] == 3  # 3 current reviews
+    assert data["reviews_last_synced"] is not None
 
 
 # --- Papers ---

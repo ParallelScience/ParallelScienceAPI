@@ -6,9 +6,15 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    # GCS
+    # Papers DB (from arxiv-browse pipeline)
     gcs_db_url: str = "https://storage.googleapis.com/parallel-arxiv-pdfs/papers.db"
     db_path: str = "/tmp/papers.db"
+
+    # Reviews DB (from ParallelReview pipeline)
+    reviews_gcs_db_url: str = "https://storage.googleapis.com/parallel-review/reviews.db"
+    reviews_db_path: str = "/tmp/reviews.db"
+
+    # Shared refresh cadence (applies to both DBs)
     db_refresh_interval_minutes: int = 30
 
     # Admin

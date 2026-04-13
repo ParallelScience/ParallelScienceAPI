@@ -1,7 +1,7 @@
 [project]
-name = "parallel-arxiv-api"
-version = "0.1.0"
-description = "REST API for the Parallel ArXiv paper database"
+name = "parallel-science-api"
+version = "0.2.0"
+description = "REST API for the Parallel Science ecosystem (papers + reviews)"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115,<1",

@@ -2,8 +2,17 @@
 
 from fastapi import APIRouter, Depends, Query
 
-from app.dependencies import get_db
-from app.models import CategoryCount, StatsOverview, SubmissionPoint, TopCitedPaper
+from app.dependencies import get_db, get_reviews_db
+from app.models import (
+    AverageReviewScores,
+    CategoryCount,
+    ReviewStatsOverview,
+    ReviewsPerPaperBucket,
+    StatsOverview,
+    SubmissionPoint,
+    TopCitedPaper,
+    TopRatedReview,
+)
 from app.taxonomy import get_category_name
 
 router = APIRouter(prefix="/stats", tags=["statistics"])
@@ -73,5 +82,64 @@ def get_top_cited(
         "GROUP BY c.cited_px_id "
         "ORDER BY cited_by_count DESC LIMIT ?",
         (limit,),
+    ).fetchall()
+    return [dict(r) for r in rows]
+
+
+# --- Review stats -----------------------------------------------------------
+
+
+@router.get("/reviews", response_model=ReviewStatsOverview)
+def get_review_stats(reviews_db=Depends(get_reviews_db)):
+    row = reviews_db.execute(
+        "SELECT COUNT(*) AS total_reviews, "
+        "COUNT(DISTINCT px_id) AS total_papers_reviewed, "
+        "AVG(score_overall) AS avg_overall, "
+        "AVG(score_soundness) AS avg_soundness, "
+        "AVG(score_novelty) AS avg_novelty, "
+        "AVG(score_significance) AS avg_significance, "
+        "AVG(score_clarity) AS avg_clarity, "
+        "AVG(score_evidence) AS avg_evidence, "
+        "MAX(review_date) AS latest_review_date "
+        "FROM reviews WHERE is_current = 1"
+    ).fetchone()
+    d = dict(row)
+    return {
+        "total_reviews": d["total_reviews"] or 0,
+        "total_papers_reviewed": d["total_papers_reviewed"] or 0,
+        "average_scores": AverageReviewScores(
+            overall=d["avg_overall"],
+            soundness=d["avg_soundness"],
+            novelty=d["avg_novelty"],
+            significance=d["avg_significance"],
+            clarity=d["avg_clarity"],
+            evidence=d["avg_evidence"],
+        ),
+        "latest_review_date": d["latest_review_date"],
+    }
+
+
+@router.get("/reviews/top-rated", response_model=list[TopRatedReview])
+def get_top_rated_reviews(
+    reviews_db=Depends(get_reviews_db),
+    limit: int = Query(20, ge=1, le=100, description="Max results"),
+):
+    rows = reviews_db.execute(
+        "SELECT review_id, px_id, paper_title, paper_author, score_overall "
+        "FROM reviews WHERE is_current = 1 AND score_overall IS NOT NULL "
+        "ORDER BY score_overall DESC, review_date DESC LIMIT ?",
+        (limit,),
+    ).fetchall()
+    return [dict(r) for r in rows]
+
+
+@router.get("/reviews/by-paper", response_model=list[ReviewsPerPaperBucket])
+def get_reviews_per_paper(reviews_db=Depends(get_reviews_db)):
+    """Histogram: how many papers have 1 review, 2 reviews, 3 reviews, etc."""
+    rows = reviews_db.execute(
+        "SELECT reviews_per_paper, COUNT(*) AS paper_count FROM ("
+        "  SELECT px_id, COUNT(*) AS reviews_per_paper "
+        "  FROM reviews WHERE is_current = 1 GROUP BY px_id"
+        ") GROUP BY reviews_per_paper ORDER BY reviews_per_paper"
     ).fetchall()
     return [dict(r) for r in rows]

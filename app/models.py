@@ -89,6 +89,8 @@ class HealthResponse(BaseModel):
     status: str
     paper_count: int
     db_last_synced: str | None
+    reviews_count: int
+    reviews_last_synced: str | None
 
 
 # --- Citations ---
@@ -124,3 +126,88 @@ class TopCitedPaper(BaseModel):
     title: str
     author: str
     cited_by_count: int
+
+
+# --- Reviews ---
+
+class ReviewScores(BaseModel):
+    overall: int | None
+    soundness: int | None
+    novelty: int | None
+    significance: int | None
+    clarity: int | None
+    evidence: int | None
+    justification: str
+
+
+class ReviewSummary(BaseModel):
+    review_id: str
+    version: int
+    px_id: str
+    paper_title: str
+    paper_author: str
+    review_date: str
+    reviewer: str
+    pages_url: str
+    scores: ReviewScores
+    total_cost: float | None
+
+
+class ReviewDetail(ReviewSummary):
+    summary: str
+    strengths: str
+    major_issues: str
+    minor_issues: str
+    very_minor_issues: str
+    maths_audit: str
+    numerics_audit: str
+    github_url: str
+    review_pdf_url: str
+    paper_pdf_url: str
+    paper_pages_url: str
+    repo: str
+    is_current: int
+    scraped_at: str
+    content_hash: str | None
+
+
+class ReviewVersion(BaseModel):
+    version: int
+    review_date: str
+    scraped_at: str
+    is_current: int
+    content_hash: str | None
+
+
+class PaginatedReviewsResponse(BaseModel):
+    reviews: list[ReviewSummary]
+    pagination: PaginationMeta
+
+
+class AverageReviewScores(BaseModel):
+    overall: float | None
+    soundness: float | None
+    novelty: float | None
+    significance: float | None
+    clarity: float | None
+    evidence: float | None
+
+
+class ReviewStatsOverview(BaseModel):
+    total_reviews: int
+    total_papers_reviewed: int
+    average_scores: AverageReviewScores
+    latest_review_date: str | None
+
+
+class TopRatedReview(BaseModel):
+    review_id: str
+    px_id: str
+    paper_title: str
+    paper_author: str
+    score_overall: int
+
+
+class ReviewsPerPaperBucket(BaseModel):
+    reviews_per_paper: int
+    paper_count: int

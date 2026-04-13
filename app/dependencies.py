@@ -10,8 +10,16 @@ from fastapi import Query
 from app.database import get_connection
 
 
-def get_db() -> sqlite3.Connection:
-    return get_connection()
+def get_papers_db() -> sqlite3.Connection:
+    return get_connection("papers")
+
+
+def get_reviews_db() -> sqlite3.Connection:
+    return get_connection("reviews")
+
+
+# Backwards-compatible alias — existing routers import `get_db`.
+get_db = get_papers_db
 
 
 @dataclass
