@@ -97,6 +97,7 @@ See [`examples/`](examples/) for more:
 - `query_paper_info.py` — query a single paper by PX ID
 - `browse_reviews.py` — browse reviews, filter, fetch scores, review stats
 - `paper_with_reviews.py` — fetch a paper and its reviews together
+- `paper_citations.py` — inspect a paper's bibliography, PX cross-references, and cited-by graph
 
 ## Tests
 
