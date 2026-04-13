@@ -42,38 +42,55 @@ def main():
     print()
 
     refs = httpx.get(f"{API}/papers/{px_id}/references").json()
-    if not refs:
-        print("No bibliography extracted yet.")
-        return
-
     px_refs = [r for r in refs if r.get("cited_px_id")]
     ext_refs = [r for r in refs if not r.get("cited_px_id")]
 
-    if px_refs:
-        print(f"Cross-references to Parallel ArXiv papers ({len(px_refs)}):")
-        for r in px_refs:
-            print(f"  {r['citation_key']} → PX:{r['cited_px_id']}")
-            if r.get("title"):
-                print(f"    {r['title'][:80]}")
-        print()
+    if not refs:
+        print("No bibliography extracted yet.")
+    else:
+        if px_refs:
+            print(f"Cross-references to Parallel ArXiv papers ({len(px_refs)}):")
+            for r in px_refs:
+                print(f"  {r['citation_key']} → PX:{r['cited_px_id']}")
+                if r.get("title"):
+                    print(f"    {r['title'][:80]}")
+            print()
 
-    print(f"External references ({len(ext_refs)}):")
-    for r in ext_refs[:10]:
-        label = r.get("arxiv_id") or r.get("doi") or "—"
-        title = (r.get("title") or "").strip()
-        year = r.get("year") or ""
-        print(f"  {r['citation_key']}  [{label}]  {year}  {title[:70]}")
-    if len(ext_refs) > 10:
-        print(f"  ... and {len(ext_refs) - 10} more")
+        print(f"External references ({len(ext_refs)}):")
+        for r in ext_refs[:10]:
+            label = r.get("arxiv_id") or r.get("doi") or "—"
+            title = (r.get("title") or "").strip()
+            year = r.get("year") or ""
+            print(f"  {r['citation_key']}  [{label}]  {year}  {title[:70]}")
+        if len(ext_refs) > 10:
+            print(f"  ... and {len(ext_refs) - 10} more")
     print()
 
     cited_by = httpx.get(f"{API}/papers/{px_id}/cited-by").json()
     if cited_by:
-        print(f"Cited by ({len(cited_by)}):")
+        print(f"Cited by ({len(cited_by)}) Parallel ArXiv paper(s):")
         for p in cited_by:
-            print(f"  PX:{p['px_id']}  {p['title'][:80]}")
+            print(f"  PX:{p['citing_px_id']}  ({p.get('date','')[:10]})  [{p.get('primary_category','')}]")
+            print(f"    {p['title']}")
+            if p.get("author"):
+                print(f"    by {p['author']}")
     else:
-        print("Not yet cited by any Parallel ArXiv paper.")
+        print(f"PX:{px_id} is not yet cited by any Parallel ArXiv paper.")
+
+    # Bonus: show the inverse graph — for each PX paper we cite, who else cites them?
+    if px_refs:
+        print()
+        print("Citers of the PX papers referenced by this paper:")
+        for r in px_refs:
+            target = r["cited_px_id"]
+            others = httpx.get(f"{API}/papers/{target}/cited-by").json()
+            others = [p for p in others if p["citing_px_id"] != px_id]
+            if others:
+                print(f"  PX:{target} is also cited by:")
+                for p in others:
+                    print(f"    PX:{p['citing_px_id']}  {p['title'][:70]}")
+            else:
+                print(f"  PX:{target} — no other citers yet")
 
 
 if __name__ == "__main__":
