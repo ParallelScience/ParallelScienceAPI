@@ -213,8 +213,46 @@ def test_citation_counts(client):
     assert data["references_count"] == 2    # cites 2 papers
     assert data["px_references_count"] == 1  # 1 is a PX paper
     assert data["cited_by_count"] == 1       # cited by paper 2
+    assert data["external_cited_by_count"] == 2  # 2 external arXiv papers
 
 
 def test_citation_counts_not_found(client):
     r = client.get("/api/v1/papers/9999.99999/citation-counts")
     assert r.status_code == 404
+
+
+def test_get_external_cited_by(client):
+    """Paper 2604.00001 has two external arXiv citations; newer first."""
+    r = client.get("/api/v1/papers/2604.00001/external-cited-by")
+    assert r.status_code == 200
+    data = r.json()
+    assert len(data) == 2
+    # Ordered by posted_date DESC
+    assert data[0]["external_id"] == "2504.22222"
+    assert data[0]["external_version"] == "v2"
+    assert data[0]["source"] == "arxiv"
+    assert data[0]["match_method"] == "bib_archive_prefix"
+    assert data[1]["external_id"] == "2504.11111"
+
+
+def test_get_external_cited_by_single(client):
+    r = client.get("/api/v1/papers/2604.00002/external-cited-by")
+    assert r.status_code == 200
+    data = r.json()
+    assert len(data) == 1
+    assert data[0]["external_id"] == "2504.33333"
+    assert data[0]["match_method"] == "tex_regex"
+
+
+def test_get_external_cited_by_empty(client):
+    """A paper with no external citations returns [] (not 404)."""
+    r = client.get("/api/v1/papers/2604.00003/external-cited-by")
+    assert r.status_code == 200
+    assert r.json() == []
+
+
+def test_get_external_cited_by_unknown_paper(client):
+    """Unknown PX ID also returns [], consistent with /cited-by."""
+    r = client.get("/api/v1/papers/9999.99999/external-cited-by")
+    assert r.status_code == 200
+    assert r.json() == []

@@ -46,6 +46,22 @@ CREATE TABLE IF NOT EXISTS citations (
     PRIMARY KEY (citing_px_id, citation_key));
 CREATE INDEX IF NOT EXISTS idx_citations_cited_px ON citations(cited_px_id) WHERE cited_px_id IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_citations_citing ON citations(citing_px_id);
+
+CREATE TABLE IF NOT EXISTS external_citations (
+    cited_px_id      TEXT NOT NULL,
+    source           TEXT NOT NULL,
+    external_id      TEXT NOT NULL,
+    external_version TEXT,
+    title            TEXT,
+    authors          TEXT,
+    year             TEXT,
+    match_method     TEXT NOT NULL,
+    posted_date      TEXT,
+    discovered_at    TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now')),
+    PRIMARY KEY (cited_px_id, source, external_id)
+);
+CREATE INDEX IF NOT EXISTS idx_ext_cite_cited ON external_citations(cited_px_id);
+CREATE INDEX IF NOT EXISTS idx_ext_cite_source ON external_citations(source, external_id);
 """
 
 REVIEWS_SCHEMA_SQL = """
@@ -251,6 +267,29 @@ def test_db():
         conn.execute(
             "INSERT INTO citations (citing_px_id, citation_key, cited_px_id, arxiv_id, doi, title, authors, year) "
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)", c
+        )
+
+    # External citations: 2604.00001 is cited by two arXiv papers, 2604.00002
+    # by one, 2604.00003 by none. Used to test /external-cited-by ordering
+    # and the new external_cited_by_count field on /citation-counts.
+    external_citations = [
+        # (cited_px_id, source, external_id, version, title, authors, year, match_method, posted_date, discovered_at)
+        ("2604.00001", "arxiv", "2504.11111", "v1", "Older paper citing DM",
+         "Carter, D.", "2025", "bib_citation_key",
+         "2025-04-01T10:00:00Z", "2026-04-16T00:00:00Z"),
+        ("2604.00001", "arxiv", "2504.22222", "v2", "Newer paper citing DM",
+         "Dubois, E.", "2025", "bib_archive_prefix",
+         "2025-04-15T10:00:00Z", "2026-04-16T00:00:00Z"),
+        ("2604.00002", "arxiv", "2504.33333", "v1", "External cite of NLP paper",
+         "Fermi, G.", "2025", "tex_regex",
+         "2025-05-01T10:00:00Z", "2026-04-16T00:00:00Z"),
+    ]
+    for ec in external_citations:
+        conn.execute(
+            "INSERT INTO external_citations "
+            "(cited_px_id, source, external_id, external_version, title, "
+            " authors, year, match_method, posted_date, discovered_at) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", ec
         )
 
     conn.commit()

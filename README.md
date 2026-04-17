@@ -46,6 +46,7 @@ Interactive API docs are available at `http://localhost:8080/docs`.
 | GET | `/api/v1/papers/{px_id}/bibtex` | BibTeX citation |
 | GET | `/api/v1/papers/{px_id}/references` | Bibliography entries |
 | GET | `/api/v1/papers/{px_id}/cited-by` | PX papers citing this paper |
+| GET | `/api/v1/papers/{px_id}/external-cited-by` | External arXiv papers citing this paper |
 | GET | `/api/v1/papers/{px_id}/citation-counts` | Citation count summary |
 | GET | `/api/v1/papers/{px_id}/reviews` | Reviews of this paper |
 | GET | `/api/v1/authors` | List authors with paper counts |

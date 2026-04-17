@@ -119,6 +119,19 @@ class CitationCounts(BaseModel):
     references_count: int
     cited_by_count: int
     px_references_count: int
+    external_cited_by_count: int
+
+
+class ExternalCitedByEntry(BaseModel):
+    source: str                      # 'arxiv' (room for 'biorxiv', 'medrxiv')
+    external_id: str                 # e.g. '2604.12345'
+    external_version: str | None
+    title: str | None
+    authors: str | None
+    year: str | None
+    match_method: str                # 'bib_archive_prefix' | 'bib_citation_key' | 'bib_url' | 'tex_regex'
+    posted_date: str | None
+    discovered_at: str
 
 
 class TopCitedPaper(BaseModel):
