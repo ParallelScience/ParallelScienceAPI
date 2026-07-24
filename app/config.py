@@ -6,12 +6,13 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    # Papers DB (from arxiv-browse pipeline)
-    gcs_db_url: str = "https://storage.googleapis.com/parallel-arxiv-pdfs/papers.db"
+    # Papers DB (from arxiv-browse pipeline). gs:// — read via the authenticated
+    # storage client; the public https:// URL 403s under Public Access Prevention.
+    gcs_db_url: str = "gs://parallel-arxiv-pdfs/papers.db"
     db_path: str = "/tmp/papers.db"
 
     # Reviews DB (from ParallelReview pipeline)
-    reviews_gcs_db_url: str = "https://storage.googleapis.com/parallel-review/reviews.db"
+    reviews_gcs_db_url: str = "gs://parallel-review/reviews.db"
     reviews_db_path: str = "/tmp/reviews.db"
 
     # Shared refresh cadence (applies to both DBs)

@@ -9,7 +9,6 @@ import logging
 import os
 import sqlite3
 import threading
-import urllib.request
 from datetime import datetime, timezone
 
 log = logging.getLogger(__name__)
@@ -49,31 +48,103 @@ def _open(key: str, path: str) -> sqlite3.Connection:
     return conn
 
 
+_GCS_HTTPS_PREFIXES = (
+    "https://storage.googleapis.com/",
+    "http://storage.googleapis.com/",
+    "https://storage.cloud.google.com/",
+)
+
+
+def _parse_gcs_uri(uri: str) -> tuple[str, str]:
+    """Split a GCS location into ``(bucket, blob_path)``.
+
+    Accepts both ``gs://bucket/path`` and the legacy public
+    ``https://storage.googleapis.com/bucket/path`` form, so a stale
+    ``PX_API_GCS_DB_URL`` override doesn't break the container.
+    """
+    rest = uri
+    for prefix in _GCS_HTTPS_PREFIXES:
+        if rest.startswith(prefix):
+            rest = rest[len(prefix):]
+            break
+    else:
+        if not rest.startswith("gs://"):
+            raise ValueError(f"Unsupported GCS location: {uri}")
+        rest = rest[len("gs://"):]
+    bucket, _, blob = rest.partition("/")
+    if not bucket or not blob:
+        raise ValueError(f"Unsupported GCS location: {uri}")
+    return bucket, blob
+
+
 def _download_from_gcs(key: str, url: str, dest: str) -> None:
-    """Download a DB from a GCS public URL and log its size + row count."""
-    log.info("Downloading %s DB from %s", key, url)
+    """Download a DB from GCS and log its size + row count.
+
+    Uses the authenticated ``google-cloud-storage`` client rather than the
+    public ``storage.googleapis.com`` URL. Anonymous reads of these buckets
+    stopped working on 2026-07-11 when org-level Public Access Prevention was
+    enforced — it overrides the buckets' surviving ``allUsers`` grant, so every
+    unauthenticated GET became a 403 and this service crashed on startup for
+    13 days. The authenticated API also hits the storage tier directly rather
+    than Google's frontend HTTP cache, so a refresh can't land a stale
+    snapshot (the bug arxiv-browse hit and documented).
+
+    Downloads to a sibling ``.part`` file and renames on success, so a failed
+    or truncated transfer can never leave a corrupt DB at ``dest``.
+    """
+    from google.cloud import storage
+
+    bucket_name, blob_path = _parse_gcs_uri(url)
+    log.info("Downloading %s DB from gs://%s/%s", key, bucket_name, blob_path)
     os.makedirs(os.path.dirname(dest) or ".", exist_ok=True)
-    urllib.request.urlretrieve(url, dest)
-    size = os.path.getsize(dest)
-    count = 0
-    query = _VALIDATION_QUERIES.get(key)
-    if query:
-        c = sqlite3.connect(dest)
-        try:
-            count = c.execute(query).fetchone()[0]
-        finally:
-            c.close()
+    part = dest + ".part"
+    client = storage.Client()
+    client.bucket(bucket_name).blob(blob_path).download_to_filename(part)
+    try:
+        size = os.path.getsize(part)
+        count = 0
+        query = _VALIDATION_QUERIES.get(key)
+        if query:
+            c = sqlite3.connect(part)
+            try:
+                count = c.execute(query).fetchone()[0]
+            finally:
+                c.close()
+    except Exception:
+        os.unlink(part)
+        raise
+    os.replace(part, dest)
     log.info("Downloaded %s DB: %d bytes, %d rows", key, size, count)
 
 
 def init_db(key: str, db_path: str, gcs_url: str | None = None) -> None:
-    """Download the named DB from GCS if configured, then open the connection."""
+    """Download the named DB from GCS if configured, then open the connection.
+
+    A download failure is logged and swallowed rather than raised. This runs
+    inside the FastAPI lifespan, so raising kills the whole process — which is
+    exactly how a GCS permission change took every endpoint offline, not just
+    the ones that needed the DB. Instead we fall back to any previously
+    downloaded file and let the periodic refresh recover.
+    """
     _db_paths[key] = db_path
     if gcs_url:
-        _download_from_gcs(key, gcs_url, db_path)
-        _last_synced[key] = datetime.now(timezone.utc).isoformat()
+        try:
+            _download_from_gcs(key, gcs_url, db_path)
+            _last_synced[key] = datetime.now(timezone.utc).isoformat()
+        except Exception:
+            log.exception("Failed to download %s DB from GCS", key)
+            _last_synced.setdefault(key, None)
     else:
         _last_synced.setdefault(key, None)
+    if not os.path.exists(db_path):
+        log.error(
+            "No local %s DB at %s — '%s' endpoints stay unavailable until a "
+            "refresh succeeds",
+            key,
+            db_path,
+            key,
+        )
+        return
     _conns[key] = _open(key, db_path)
 
 

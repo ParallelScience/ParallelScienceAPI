@@ -35,8 +35,17 @@ async def _periodic_refresh(settings) -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = get_settings()
-    init_db("papers", settings.db_path, settings.gcs_db_url)
-    init_db("reviews", settings.reviews_db_path, settings.reviews_gcs_db_url)
+    # Never let a DB problem abort startup: an exception here kills the whole
+    # process, so a single unreachable bucket takes down every endpoint
+    # (including /docs and /health) instead of just the data-backed ones.
+    for key, path, url in (
+        ("papers", settings.db_path, settings.gcs_db_url),
+        ("reviews", settings.reviews_db_path, settings.reviews_gcs_db_url),
+    ):
+        try:
+            init_db(key, path, url)
+        except Exception:
+            log.exception("Could not initialize %s DB — starting degraded", key)
     task = asyncio.create_task(_periodic_refresh(settings))
     yield
     task.cancel()
@@ -71,16 +80,19 @@ app.include_router(stats.router, prefix=prefix)
 
 @app.get("/health", response_model=HealthResponse, tags=["utility"])
 def health():
-    papers_conn = get_connection("papers")
-    reviews_conn = get_connection("reviews")
-    paper_count = papers_conn.execute(
-        "SELECT COUNT(*) FROM papers WHERE is_current = 1"
-    ).fetchone()[0]
-    reviews_count = reviews_conn.execute(
-        "SELECT COUNT(*) FROM reviews WHERE is_current = 1"
-    ).fetchone()[0]
+    def _count(key: str, sql: str) -> int | None:
+        """Row count, or None if that DB never loaded (degraded startup)."""
+        try:
+            return get_connection(key).execute(sql).fetchone()[0]
+        except Exception:
+            log.exception("Health check failed for %s DB", key)
+            return None
+
+    paper_count = _count("papers", "SELECT COUNT(*) FROM papers WHERE is_current = 1")
+    reviews_count = _count("reviews", "SELECT COUNT(*) FROM reviews WHERE is_current = 1")
+    healthy = paper_count is not None and reviews_count is not None
     return {
-        "status": "ok",
+        "status": "ok" if healthy else "degraded",
         "paper_count": paper_count,
         "db_last_synced": get_last_synced("papers"),
         "reviews_count": reviews_count,

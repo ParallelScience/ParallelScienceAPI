@@ -8,6 +8,7 @@ dependencies = [
     "uvicorn[standard]>=0.34,<1",
     "pydantic>=2,<3",
     "pydantic-settings>=2,<3",
+    "google-cloud-storage>=2,<4",
 ]
 
 [project.optional-dependencies]

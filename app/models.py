@@ -87,9 +87,11 @@ class CategoryCount(BaseModel):
 
 class HealthResponse(BaseModel):
     status: str
-    paper_count: int
+    # None when that DB failed to load — status is then "degraded", and the
+    # service still answers so the failure is visible instead of a blank 5xx.
+    paper_count: int | None
     db_last_synced: str | None
-    reviews_count: int
+    reviews_count: int | None
     reviews_last_synced: str | None
 
 
